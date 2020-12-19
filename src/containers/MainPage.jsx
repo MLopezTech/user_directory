@@ -21,9 +21,9 @@ class MainPage extends Component {
   // };
 
   getEmployees = () => {
-      fetch("https://randomuser.me/api/?results=24")
+      fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
-      .then((workers) => this.setState({employees: workers.results}))
+      .then((workers) => this.setState({employees: workers}));
   };
 
   handleChange = (e) => {
@@ -33,6 +33,10 @@ class MainPage extends Component {
   };
 
   render() {
+    const { employees, searchTerm } = this.state;
+    const filteredEmployee = employees.filter(employee =>
+      employee.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
     return (
       <>
         <div className="container">
@@ -54,7 +58,7 @@ class MainPage extends Component {
             </div>
           </div>
         </div>
-        <List employees={this.state.employees} />
+        <List employees={filteredEmployee} />
       </>
 
     );
